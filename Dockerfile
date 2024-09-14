@@ -1,26 +1,22 @@
-# Use an official Node.js runtime as the base image
-FROM node:18-alpine
+FROM node:20-slim
 
-# Set the working directory inside the container
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-# Install pnpm globally
-RUN npm install -g pnpm
+# Copy the package.json and package-lock.json files
+COPY package*.json .npmrc ./
 
-# Copy the package.json, pnpm-lock.yaml and .npmrc to leverage cached dependencies
-COPY package.json .npmrc ./
-
-# Install dependencies using pnpm
-RUN pnpm install
+# Install the dependencies
+RUN npm install --production
 
 # Copy the rest of the application code to the container
 COPY . .
 
-# Expose the port that the Next.js app runs on (default is 3000)
-EXPOSE 3000
+# Build the Next.js app
+RUN npm run build
 
-# Set environment variables (use development mode)
-ENV NODE_ENV=development
+# Expose the port on which the app will run
+EXPOSE 8080
 
-# Start the application in development mode
-CMD ["pnpm", "run", "dev"]
+# Command to run the app in production
+CMD ["npm", "run", "start"]
