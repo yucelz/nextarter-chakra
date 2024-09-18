@@ -1,0 +1,28 @@
+
+name: Clone Public Repository Workflow
+
+on:
+    push:
+      tags:
+        - "clone*"
+
+jobs:
+    
+  job-public-repo-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Clone nextarter-chakra
+        uses: yucelz/nextarter-chakra@main
+        with:
+          owner: 'yucelz'
+          repository: 'clone-nextarter-chakra'
+      
+      - name: Access cloned repository content
+        run: |
+          echo "ROOT"
+          ls -la
+          echo "CLONED REPO"
+          cd poc-github-actions
+          ls -la
+
