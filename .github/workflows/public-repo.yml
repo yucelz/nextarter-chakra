@@ -12,17 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       
-      - name: Clone nextarter-chakra
-        uses: yucelz/nextarter-chakra@main
+      - name: Clone nextarter-chakra PUBLIC repository
+        uses: whyakari/github-repo-action@v3.1
         with:
+          depth: 1
+          branch: 'main'
           owner: 'yucelz'
-          repository: 'clone-nextarter-chakra'
+          repository: 'poc-nextarter-chakra'
       
       - name: Access cloned repository content
         run: |
           echo "ROOT"
           ls -la
           echo "CLONED REPO"
-          cd poc-github-actions
+          cd poc-nextarter-chakra
           ls -la
 
